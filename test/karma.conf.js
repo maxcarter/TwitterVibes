@@ -30,6 +30,7 @@ module.exports = function(config) {
       'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/angular-strap/dist/angular-strap.js',
       'app/bower_components/angular-strap/dist/angular-strap.tpl.js',
+      'app/bower_components/angular-base64/angular-base64.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
