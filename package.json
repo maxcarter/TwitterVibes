@@ -38,7 +38,9 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "bower install && npm run build",
+    "build": "grunt build"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
