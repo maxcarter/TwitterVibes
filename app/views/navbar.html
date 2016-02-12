@@ -5,8 +5,8 @@
         </div>
         <div class="col-md-8">
             <form class="navbar-form navbar-left form-custom-search col-md-11" role="search">
-                <input type="text" class="form-control searchbar-custom" placeholder="Search">
-                <button type="submit" class="searchbar-custom-item"></button>
+                <input type="text" ng-model="query" class="form-control searchbar-custom" placeholder="Search">
+                <button type="submit" class="searchbar-custom-item" ng-click="queryFactory.param.set('q', query)"></button>
             </form>
         </div>
         <div class="col-md-2">

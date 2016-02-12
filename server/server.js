@@ -25,7 +25,9 @@ app.get('/twitter/search/tweets', function(req, res) {
     twitter.get('search/tweets', {
         q: req.query.q
     }, function(error, tweets, response) {
-        if (error) throw error;
+        if (error) {
+        	res.status(500).json(error);
+        }
         res.setHeader('Content-Type', 'application/json');
     	res.json(tweets);
     });

@@ -1,2 +1,22 @@
 <div ng-include="'views/navbar.html'"></div>
-{{tweets}}
+<div class="wrapper">
+	<div class="row">
+		<div class="col-md-4" ng-repeat="tweet in tweets">
+			<div class="tweet-card">
+				{{tweet.text}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.wrapper{
+	margin-top:70px;
+}
+.tweet-card{
+	display:block;
+	width:100%;
+	min-height:100px;
+	background:#e3e3e3;
+}
+</style>
