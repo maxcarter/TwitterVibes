@@ -1,83 +1,191 @@
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
 body {
-  padding: 0;
+    background-color: #000000;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
+
+/* Navbar */
+
+.navbar-custom {
+    background-color: #55ACEE;
+    border: none;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.navbar-custom .navbar-brand {
+    color: #ffffff;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+    color: #ffffff;
+    background-color: transparent;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+.navbar-custom .navbar-text {
+    color: #ffffff;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+.navbar-custom .navbar-nav > li > a {
+    color: #ffffff;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+    color: #ffffff;
+    background-color: transparent;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+    color: #55ACEE;
+    background-color: #ffffff;
+}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+.navbar-custom .navbar-nav > .disabled > a,
+.navbar-custom .navbar-nav > .disabled > a:hover,
+.navbar-custom .navbar-nav > .disabled > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.navbar-custom .navbar-toggle {
+    border:none;
+    background: #55ACEE;
+}
+
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+    background-color: #ddd;
+}
+
+.navbar-custom .navbar-toggle .icon-bar {
+    background-color: #3B89C3;
+}
+
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+    border-color: #55ACEE;
+}
+
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .open > a:hover,
+.navbar-custom .navbar-nav > .open > a:focus {
+    color: #55ACEE;
+    background-color: #ffffff;
+}
+
+@media (max-width: 767px) {
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+        background-color: transparent;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #55ACEE;
+        background-color: #ffffff;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #ffffff;
+        background-color: transparent;
+    }
+}
+
+.navbar-custom .navbar-link {
+    color: #ffffff;
+}
+
+.navbar-custom .navbar-link:hover {
+    color: #ffffff;
+}
+
+.navbar-custom .btn-link {
+    color: #ffffff;
+}
+
+.navbar-custom .btn-link:hover,
+.navbar-custom .btn-link:focus {
+    color: #ffffff;
+}
+
+.navbar-custom .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-custom .btn-link:hover,
+.navbar-custom .btn-link[disabled]:focus,
+fieldset[disabled] .navbar-custom .btn-link:focus {
+    color: #ffffff;
+}
+
+.form-custom-search {
+    display: inline-block;
+    margin: 0;
+    padding: 8px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+    vertical-align: top;
+    z-index: 10;
+    width: 100%;
+}
+
+.form-custom-search:after {
+    background-color: #55acee;
+    bottom: 0;
+    content: ' ';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+    z-index: -1;
+}
+
+.searchbar-custom {
+    background-color: #3b89c3;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 13px;
+    height: 30px;
+    margin: 0;
+    outline: 0;
+    padding: 0 30px 0 10px;
+    -webkit-transition: all 0.15s;
+    transition: all 0.15s;
+    width: 100% !important;
+}
+
+.searchbar-custom::-webkit-input-placeholder {
+    color: #e3e3e3;
+}
+
+.searchbar-custom-item {
+    background: none;
+    border: 0;
+    font-size: 13px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    overflow: hidden;
+    right: 8px;
+    position: absolute;
+    top: 8px;
+    width: 32px;
+    display: inline-block;
+}
+
+.searchbar-custom-item:before {
+    color: #e1e8ed;
+    content: '\f002';
+    display: block;
+    font-family: "FontAwesome", Arial, sans-serif;
+    line-height: 31px;
 }

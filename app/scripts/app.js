@@ -12,7 +12,8 @@ angular
   .module('twitterSearchApp', [
     'ngAnimate',
     'ngCookies',
-    'ngRoute'
+    'ngRoute',
+    'mgcrea.ngStrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
