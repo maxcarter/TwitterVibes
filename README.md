@@ -1,12 +1,57 @@
-# twitter-search
+# Twitter-Search
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.12.1.
+Twitter-Search is a web application that searches for recent tweets.
 
-## Build & development
 
-Run `grunt` for building and `grunt serve` for preview.
+## Installation
 
-## Testing
+* Prerequisite: [Node.js](https://nodejs.org/en/) 
+* Prerequisite: [GruntJS](http://gruntjs.com/getting-started) 
+* Prerequisite: [Bower](http://bower.io/#install-bower)  
 
-Running `grunt test` will run the unit tests with karma.
+```
+npm install 
+```
+
+## Server
+
+1. [Configure](https://github.com/maxcarter/TwitterSearch/blob/master/server/config.js) the server with your Twitter consumer_key and consumer_secret. You can obtain these credentials by [creating a Twitter App](https://apps.twitter.com/)
+2. [Build](https://github.com/maxcarter/Quick#build) the front-end.
+4. Start the Node.js server by running the following commands:
+
+```
+npm start
+```
+
+## Build
+
+```
+grunt
+```
+
+## Test
+
+```
+grunt test
+```
+
+## Tech Specs
+
+* [Yeoman](http://yeoman.io/) scaffolding
+* [Node.js](https://nodejs.org/en/) backend
+* [AngularJS](https://angularjs.org/) frontend
+* [Bootstrap](http://getbootstrap.com/) styling
+* [Grunt](http://gruntjs.com/) task management 
+* [Bower](http://bower.io/) package management
+* [Karma](https://karma-runner.github.io/0.13/index.html) testing
+
+
+## To do:
+
+* Better error handeling on the server
+* Upload to a public cloud infrastructure 
+* NoSQL database integrations
+* Visualization of tweets
+* Sentiment Analysis of tweets
+
+
