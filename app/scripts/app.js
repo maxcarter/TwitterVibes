@@ -13,6 +13,7 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngRoute',
+    'ngSanitize',
     'mgcrea.ngStrap',
     'base64'
   ])

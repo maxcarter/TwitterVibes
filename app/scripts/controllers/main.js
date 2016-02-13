@@ -21,7 +21,8 @@ angular.module('twitterSearchApp')
 
         if ($scope.query !== null && $scope.query !== undefined && $scope.query !== '') {
             Twitter.search({
-                q: $scope.query
+                q: $scope.query,
+                result_type: "recent"
             }).then(
                 function success(response) {
                     $scope.tweets = response.data.statuses;
