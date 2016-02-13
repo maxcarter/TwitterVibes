@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(express.static('../dist'));
-app.use('/dev', express.static('../app'));
+app.use(express.static('./dist'));
+app.use('/dev', express.static('./app'));
 
 
 var enc_secret = new Buffer(config.consumer_key + ':' + config.consumer_secret).toString('base64');
@@ -60,50 +60,7 @@ bearerReq.write(post_data);
 bearerReq.end();
 
 
-app.get('/twitter/search/tweets', function(req, res) {
-    var text = '';
-    var options = {
-        host: 'api.twitter.com',
-        path: '/1.1/search/tweets.json?' + qs.stringify(req.query),
-        method: 'GET',
-        headers: {
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + config.bearer
-        }
-    };
-
-    var http_success = function(data) {
-        res.json(data);
-    };
-
-    var http_error = function(data) {
-        res.status(500).json(data);
-    };
-
-    if (config.bearer) {
-        https.request(options).on('response', function(response) {
-            var data = '';
-            var error = '';
-            response.on("data", function(d) {
-                data += d;
-            });
-            response.on("error", function(e) {
-                error += e;
-            });
-            response.on('end', function() {
-                if (error) {
-                    http_error(JSON.parse(error));
-                } else {
-                    http_success(JSON.parse(data));
-                }
-
-            });
-        }).end();
-    } else {
-    	http_error(JSON.parse("The server is not ready to accept requests. Please wait for the bearer token."));
-    }
-});
+require('./api')(app, config, https, qs);
 
 app.listen(port);
 console.log("Started Node.js server on port " + port);
