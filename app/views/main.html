@@ -19,6 +19,9 @@
             <div class="tweet-footer-icons">
                 <a title="Open in Twitter" href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">Open in Twitter <i class="fa fa-twitter"></i></a>
             </div>
+            <div class="tweet-time">
+            	<small>{{timeFactory.fromNow(tweet.created_at)}}</small>
+            </div>
         </div>
     </div>
 </div>

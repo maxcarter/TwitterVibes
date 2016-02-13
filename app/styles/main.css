@@ -253,3 +253,8 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
     right: 20px;
     bottom: 20px;
 }
+.tweet-time{
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+}

@@ -8,7 +8,7 @@
  * Controller of the twitterSearchApp
  */
 angular.module('twitterSearchApp')
-    .controller('MainCtrl', function($scope, $alert, Twitter, Query) {
+    .controller('MainCtrl', function($scope, $alert, Twitter, Query, Time) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -16,6 +16,7 @@ angular.module('twitterSearchApp')
         ];
 
         $scope.queryFactory = Query;
+        $scope.timeFactory = Time;
         $scope.query = Query.param.get("q");
         $scope.lang = (Query.param.get("lang")) ? Query.param.get("q") : 'en';
 

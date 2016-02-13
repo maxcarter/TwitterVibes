@@ -32,6 +32,7 @@ module.exports = function(config) {
       'app/bower_components/angular-strap/dist/angular-strap.tpl.js',
       'app/bower_components/angular-base64/angular-base64.js',
       'app/bower_components/angular-sanitize/angular-sanitize.js',
+      'app/bower_components/moment/moment.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
