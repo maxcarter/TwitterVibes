@@ -1,60 +1,24 @@
 <div ng-include="'views/navbar.html'"></div>
 <div class="wrapper">
+    <div id="alert-container"></div>
+    <div class="loading" ng-show="loading">
+        <i class="fa fa-spin fa-refresh fa-5x"></i>
+    </div>
+    <div align="center" class="welcome" ng-show="welcome">
+    	<h1>Welcome!</h1>	
+		<p>Type in the search bar above to search for Tweets</p>
+    </div>
     <div class="col-md-4" ng-repeat="tweet in tweets">
         <div class="tweet-card">
-        	<div class="tweet-head">
-        		<a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>
-        	</div>
-        	<div class="tweet-body">
-        		<p ng-bind-html="tweet.text | TweetLinky:'_blank'"></p>
-        	</div>
-             <div class="tweet-footer-icons">
-				<a title="Open in Twitter" href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">Open in Twitter <i class="fa fa-twitter"></i></a>
-             </div>
+            <div class="tweet-head">
+                <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>
+            </div>
+            <div class="tweet-body">
+                <p ng-bind-html="tweet.text | TweetLinky:'_blank'"></p>
+            </div>
+            <div class="tweet-footer-icons">
+                <a title="Open in Twitter" href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">Open in Twitter <i class="fa fa-twitter"></i></a>
+            </div>
         </div>
     </div>
 </div>
-<style>
-.wrapper {
-    margin-top: 70px;
-}
-
-.tweet-card {
-    display: block;
-    width: 100%;
-    height: 150px;
-    background: #f9f9f9;
-    padding: 10px;
-    margin:10px;
-    border-left:4px solid #5bc0de;
-}
-
-.tweet-positive {
-	border-left:4px solid #5cb85c;
-}
-.tweet-negative {
-	border-left:4px solid #d9534f;
-}
-.tweet-neutral {
-	border-left:4px solid #337AB7;
-}
-
-.tweet-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 5px;
-}
-.tweet-head{
-	display:block;
-	width:100%;
-}
-.tweet-body{
-	display:block;
-	width:100%;
-}
-.tweet-footer-icons{
-	position:absolute;
-	right:20px;
-	bottom:20px;
-}
-</style>
