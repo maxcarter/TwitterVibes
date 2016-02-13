@@ -17,11 +17,9 @@ npm install
 
 1. [Configure](https://github.com/maxcarter/TwitterSearch/blob/master/server/config.js) the server with your Twitter consumer_key and consumer_secret. You can obtain these credentials by [creating a Twitter App](https://apps.twitter.com/)
 2. [Build](https://github.com/maxcarter/Quick#build) the front-end.
-4. Start the Node.js server by running the following commands:
-
-```
-npm start
-```
+4. Start the Node.js server by running the following command: `npm start`
+5. Wait until you see `The server is now ready to accept requests.`
+6. Open the app in you browser at [http://localhost:3000](http://localhost:3000)
 
 ## Build
 
@@ -48,6 +46,7 @@ grunt test
 
 ## To do:
 
+* Mobile optimization 
 * Better error handeling on the server
 * Upload to a public cloud infrastructure 
 * NoSQL database integrations
