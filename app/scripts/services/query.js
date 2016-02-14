@@ -8,7 +8,7 @@
  * Factory in the twitterSearchApp.
  */
 angular.module('twitterSearchApp')
-    .factory('Query', function($location) {
+    .factory('Query', function($location, $route) {
         // Service logic
         // ...
 
@@ -40,6 +40,9 @@ angular.module('twitterSearchApp')
                     }
                     return value;
                 }
+            },
+            reload: function() {
+                $route.reload();
             }
         };
     });
