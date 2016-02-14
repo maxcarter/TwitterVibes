@@ -7,6 +7,16 @@ body {
 
 /* Navbar */
 
+.custom-brand i.fa {
+    display: none;
+}
+
+@media (min-width: 1130px) {
+    .custom-brand i.fa {
+        display: inline;
+    }
+}
+
 .navbar-custom {
     background-color: #55ACEE;
     border: none;
@@ -252,7 +262,8 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
     right: 20px;
     bottom: 20px;
 }
-.tweet-time{
+
+.tweet-time {
     position: absolute;
     left: 40px;
     bottom: 20px;
