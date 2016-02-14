@@ -9,7 +9,7 @@
 		<p>Type in the search bar above to search for Tweets</p>
     </div>
     <div class="col-md-4" ng-repeat="tweet in tweets">
-        <div class="tweet-card">
+        <div class="tweet-card" ng-class="{'tweet-positive': tweet.sentiment.score>0, 'tweet-negative': tweet.sentiment.score<0,'tweet-neutral': tweet.sentiment.score===0}">
             <div class="tweet-head">
                 <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>
             </div>

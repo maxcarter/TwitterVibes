@@ -1,6 +1,11 @@
+var sentiment = require('sentiment');
 module.exports = function(app, config, https, qs) {
     app.get('/twitter/search/tweets', function(req, res) {
         var http_success = function(data) {
+            for(var i=0; i<data.statuses.length; i++) {
+                var s = sentiment(data.statuses[i].text);
+                data.statuses[i].sentiment = s;
+            }
             res.json(data);
         };
 
