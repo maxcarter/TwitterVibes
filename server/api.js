@@ -1,4 +1,5 @@
 var sentiment = require('sentiment');
+var Tweet = require('./models/tweet');
 module.exports = function(app, config, https, qs) {
     app.get('/twitter/search/tweets', function(req, res) {
         var http_success = function(data) {
@@ -35,6 +36,12 @@ module.exports = function(app, config, https, qs) {
                 }
 
                 data.statuses[i].sentiment = s;
+                var tweet = new Tweet(data.statuses[i]);
+                tweet.save(function(err, fluffy) {
+                    if (err) {
+                        console.error(err)
+                    }
+                });
             }
 
             summary.tweets.normal = summary.tweets.total - summary.tweets.retweets - summary.tweets.replies;

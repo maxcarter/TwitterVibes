@@ -3,10 +3,20 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var qs = require('qs');
 var https = require('https');
+var mongoose = require('mongoose');
 
 var config = require('./config');
+var database = 'mongodb://localhost/twittersearch';
 var app = express();
 var port = 3000;
+
+mongoose.connect(database);
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("Connected to Mongo DB");
+});
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -45,7 +55,7 @@ var bearerReq = https.request(oauthOptions, function(response) {
         data += d;
     });
     response.on("error", function(e) {
-        error += e;
+        error = e;
     });
     response.on('end', function() {
         if (error) {
@@ -57,7 +67,7 @@ var bearerReq = https.request(oauthOptions, function(response) {
     });
 });
 bearerReq.on("error", function(e) {
-	console.log("Error retrieving the Twitter API Bearer token!");
+    console.log("Error retrieving the Twitter API Bearer token!");
     console.log(JSON.stringify(e));
 });
 bearerReq.write(post_data);
