@@ -109,7 +109,7 @@ angular.module('twitterSearchApp')
                     $scope.loading = false;
                     $alert({
                         title: response.status + " " + response.statusText,
-                        content: response.data,
+                        content: (typeof response.data === "object")? response.data.text : response.data,
                         placement: 'top',
                         type: 'danger',
                         show: true,

@@ -56,6 +56,10 @@ var bearerReq = https.request(oauthOptions, function(response) {
 
     });
 });
+bearerReq.on("error", function(e) {
+	console.log("Error retrieving the Twitter API Bearer token!");
+    console.log(JSON.stringify(e));
+});
 bearerReq.write(post_data);
 bearerReq.end();
 

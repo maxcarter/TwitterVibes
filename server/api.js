@@ -42,8 +42,8 @@ module.exports = function(app, config, https, qs) {
             res.json(data);
         };
 
-        var http_error = function(data) {
-            res.status(500).json(data);
+        var http_error = function(data, status) {
+            res.status((status) ? status : 500).json(data);
         };
 
         if (config.bearer) {
@@ -57,7 +57,7 @@ module.exports = function(app, config, https, qs) {
                     'Authorization': 'Bearer ' + config.bearer
                 }
             };
-            https.request(options).on('response', function(response) {
+            var request = https.request(options).on('response', function(response) {
                 var data = '';
                 var error = '';
                 response.on("data", function(d) {
@@ -68,15 +68,23 @@ module.exports = function(app, config, https, qs) {
                 });
                 response.on('end', function() {
                     if (error) {
-                        http_error(JSON.parse(error));
+                        http_error(JSON.parse(JSON.stringify(e)));
                     } else {
                         http_success(JSON.parse(data));
                     }
 
                 });
-            }).end();
+            });
+            request.on("error", function(e) {
+                var error = JSON.parse(JSON.stringify(e));
+                error.text = "HTTPS request error for api.twitter.com/1.1/search/tweets.json, see console for details!";
+                http_error(error);
+            });
+            request.end();
         } else {
-            http_error(JSON.parse("The server is not ready to accept requests. Please wait for the bearer token."));
+            http_error({
+                text: "No Twitter API Bearer token!"
+            });
         }
     });
 }
