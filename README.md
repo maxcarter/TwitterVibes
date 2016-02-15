@@ -46,11 +46,7 @@ grunt test
 
 ## To do:
 
-* Mobile optimization 
-* Better error handeling on the server
 * Upload to a public cloud infrastructure 
 * NoSQL database integrations
-* Visualization of tweets
-* Sentiment Analysis of tweets
 
 
