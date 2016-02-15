@@ -1,52 +1,60 @@
 var sentiment = require('sentiment');
 var Tweet = require('./models/tweet');
+var calculateSummary = function(data) {
+    var summary = {
+        sentiment: 0,
+        tweets: {
+            total: data.search_metadata.count,
+            normal: 0,
+            retweets: 0,
+            replies: 0,
+            positive: 0,
+            negative: 0,
+            neutral: 0
+        }
+    }
+    for (var i = 0; i < data.statuses.length; i++) {
+        var s = sentiment(data.statuses[i].text);
+        if (s.score > 0) {
+            summary.tweets.positive++;
+            summary.sentiment++;
+        } else if (s.score < 0) {
+            summary.tweets.negative++;
+            summary.sentiment--;
+        } else if (s.score === 0) {
+            summary.tweets.neutral++;
+        }
+
+        if (data.statuses[i].retweet_count > 0) {
+            summary.tweets.retweets++;
+        }
+
+        if (data.statuses[i].in_reply_to_user_id_str !== null) {
+            summary.tweets.replies++;
+        }
+
+        data.statuses[i].sentiment = s;
+    }
+    summary.tweets.normal = summary.tweets.total - summary.tweets.retweets - summary.tweets.replies;
+    data.summary = summary;
+    return data;
+};
+var saveTweets = function(data) {
+    for (var i = 0; i < data.statuses.length; i++) {
+        var tweet = new Tweet(data.statuses[i]);
+        tweet.save(function(err, fluffy) {
+            if (err) {
+                console.error(err)
+            }
+        });
+    }
+}
 module.exports = function(app, config, https, qs) {
     app.get('/twitter/search/tweets', function(req, res) {
         var http_success = function(data) {
-            var summary = {
-                sentiment: 0,
-                tweets: {
-                    total: data.search_metadata.count,
-                    normal: 0,
-                    retweets: 0,
-                    replies: 0,
-                    positive: 0,
-                    negative: 0,
-                    neutral: 0
-                }
-            }
-            for (var i = 0; i < data.statuses.length; i++) {
-                var s = sentiment(data.statuses[i].text);
-                if (s.score > 0) {
-                    summary.tweets.positive++;
-                    summary.sentiment++;
-                } else if (s.score < 0) {
-                    summary.tweets.negative++;
-                    summary.sentiment--;
-                } else if (s.score === 0) {
-                    summary.tweets.neutral++;
-                }
-
-                if (data.statuses[i].retweet_count > 0) {
-                    summary.tweets.retweets++;
-                }
-
-                if (data.statuses[i].in_reply_to_user_id_str !== null) {
-                    summary.tweets.replies++;
-                }
-
-                data.statuses[i].sentiment = s;
-                var tweet = new Tweet(data.statuses[i]);
-                tweet.save(function(err, fluffy) {
-                    if (err) {
-                        console.error(err)
-                    }
-                });
-            }
-
-            summary.tweets.normal = summary.tweets.total - summary.tweets.retweets - summary.tweets.replies;
-            data.summary = summary;
-            res.json(data);
+            var d = calculateSummary(data);
+            saveTweets(d);
+            res.json(d);
         };
 
         var http_error = function(data, status) {
