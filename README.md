@@ -1,6 +1,6 @@
 # Twitter-Search
 
-Twitter-Search is a web application that searches for recent tweets based on a provided query. The queried tweets are then analyzed using sentiment analysis to determin if they are of positive or negative nature.  
+Twitter-Search is a web application that searches for recent tweets based on a provided query. The queried tweets are then analyzed using sentiment analysis to determine if they are of positive or negative nature.  
 
 
 ## Installation
