@@ -15,7 +15,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'mgcrea.ngStrap',
-    'base64'
+    'base64',
+    'chart.js',
+    'am.imgtwemoji'
   ])
   .config(function ($routeProvider) {
     $routeProvider

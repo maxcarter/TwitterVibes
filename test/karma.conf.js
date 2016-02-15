@@ -33,6 +33,10 @@ module.exports = function(config) {
       'app/bower_components/angular-base64/angular-base64.js',
       'app/bower_components/angular-sanitize/angular-sanitize.js',
       'app/bower_components/moment/moment.js',
+      'app/bower_components/Chart.js/Chart.js',
+      'app/bower_components/angular-chart.js/dist/angular-chart.js',
+      'app/bower_components/twemoji/twemoji.min.js',
+      'app/bower_components/img-angular-twemoji/img-angular-twemoji.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

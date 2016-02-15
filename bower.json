@@ -12,7 +12,10 @@
     "angular-motion": "~0.4.3",
     "angular-base64": "~2.0.5",
     "angular-sanitize": "~1.5.0",
-    "moment": "~2.11.2"
+    "moment": "~2.11.2",
+    "angular-chart.js": "~0.8.8",
+    "twemoji": "~1.4.2",
+    "img-angular-twemoji": "*"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
@@ -30,6 +33,11 @@
     "font-awesome": {
       "main": [
         "css/font-awesome.css"
+      ]
+    },
+    "twemoji": {
+      "main": [
+        "twemoji.min.js"
       ]
     }
   }
