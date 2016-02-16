@@ -10,7 +10,7 @@
  */
 angular.module('twitterSearchApp')
     .filter('TweetLinky', function($filter, $sce) {
-        return function(text, target) {
+        return function(text) {
             if (!text) {
                 return text;
             }
