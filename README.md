@@ -58,14 +58,19 @@ grunt test
 
 ## API
 
-There is only one endpoint in this api `/twitter/search/tweets`. This endpoint performs an HTTPS GET request to the [Twitter Search API](https://dev.twitter.com/rest/reference/get/search/tweets). Once data is received it is analyzed using [sentiment](https://github.com/thisandagain/sentiment) analysis and stored in a Mongo DB database.
+There is only one endpoint in this api `/twitter/search/tweets`. This endpoint performs an HTTPS GET request to the [Twitter Search API](https://dev.twitter.com/rest/reference/get/search/tweets). Once data is received it is analyzed using [sentiment](https://github.com/thisandagain/sentiment) analysis, stored in a Mongo DB database, and returned in response to the request.
 
 ### Parameters
 * `q`: The Twitter search query
 * `count`: The number of tweets to return per page, up to a maximum of 100
 * `sentiment`: The tweet sentiment filter (positive, negative, neutral)
 
-When a sentiment is set, the endpoint behaves slightly different. First a request is made to the Twitter Search API to obtain recent tweets related to the query. Next sentiment analysis is performed on the tweets and they are saved to the database as usual. The data is then filtered based on the specified sentiment, this will remove all tweets that do not match the requested sentiment. To fill the wholes left by the filtering, the database is queried to find the remaining most recent tweets related to the query with the requested sentiment. Finally the combined data is returned in response to the request.
+When a sentiment is set, the endpoint behaves slightly different. First a request is made to the Twitter Search API to obtain recent tweets related to the query. Next sentiment analysis is performed on the tweets and they are saved to the database as usual. The data is then filtered based on the specified sentiment, this will remove all tweets that do not match the requested sentiment. To fill the holes left by the filtering, the database is queried to find the remaining most recent tweets related to the query with the requested sentiment. Finally, the combined data is returned in response to the request.
+
+### Sample Request
+```
+http://localhost:3000/twitter/search/tweets?q=Example
+```
 
 ## Development
 
@@ -77,7 +82,7 @@ Front-End:
 bower install --save <Name of Package>
 ```
 
-Back-End server:
+Back-End:
 
 
 ```
