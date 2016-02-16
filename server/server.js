@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var cfenv = require("cfenv");
 
 var config = require('./config');
-var database = 'mongodb://localhost/twittersearch';
+var database = config.mongodb;
 var cf = cfenv.getAppEnv();
 var app = express();
 var host = (cf.bind) ? cf.bind : 'localhost';
