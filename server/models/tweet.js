@@ -74,21 +74,22 @@ var schema = new mongoose.Schema({
         required: true
     },
     created_at: {
-        type: String,
+        type: Date,
         required: true
     },
     id_str: {
         type: String,
         required: true
     },
+    id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     lang: {
         type: String,
         required: true,
         default: "en"
-    },
-    source: {
-        type: String,
-        required: false
     },
     sentiment: {
         type: sentiment,
@@ -122,6 +123,10 @@ var schema = new mongoose.Schema({
         type: String,
         required: false
     }
+});
+
+schema.index({
+    "$**": "text"
 });
 
 module.exports = mongoose.model('Tweet', schema);;

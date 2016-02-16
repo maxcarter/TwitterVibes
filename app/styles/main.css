@@ -7,6 +7,13 @@ body {
 
 /* Navbar */
 
+.dropdown-menu {
+    background-color: #3B89C3;
+}
+.dropdown-menu li a {
+    color:#ffffff;
+}
+
 .custom-brand i.fa {
     display: none;
 }
@@ -19,7 +26,7 @@ body {
 
 .navbar-custom {
     background-color: #55ACEE;
-    border: none;
+    border-bottom:1px solid #55ACEE;
 }
 
 .navbar-custom .navbar-brand {
@@ -43,14 +50,14 @@ body {
 .navbar-custom .navbar-nav > li > a:hover,
 .navbar-custom .navbar-nav > li > a:focus {
     color: #ffffff;
-    background-color: transparent;
+    background-color: #3B89C3;
 }
 
 .navbar-custom .navbar-nav > .active > a,
 .navbar-custom .navbar-nav > .active > a:hover,
 .navbar-custom .navbar-nav > .active > a:focus {
-    color: #55ACEE;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #3B89C3;
 }
 
 .navbar-custom .navbar-nav > .disabled > a,

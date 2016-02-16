@@ -11,8 +11,8 @@
     <div class="row" ng-show="tweets.length > 0">
         <div class="col-sm-12 welcome" align="center">
             <div style="padding-bottom:50px">
-                <h1 align="center">Analyzed {{summary.tweets.total}} Tweets!</h1>
-                <small>{{summary.tweets.total}} recent tweets were analyzed related to your query: {{query}}</small>
+                <h1 align="center">Analyzed {{tweets.length}} Tweets!</h1>
+                <small>{{tweets.length}} recent tweets were analyzed related to your query: {{query}}</small>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
             </canvas>
         </div>
     </div>
-    <div class="col-md-4" ng-repeat="tweet in tweets">
+    <div class="col-md-4" ng-repeat="tweet in tweets | orderBy: '-created_at'">
         <div class="tweet-card" ng-class="{'tweet-positive': tweet.sentiment.score>0, 'tweet-negative': tweet.sentiment.score<0,'tweet-neutral': tweet.sentiment.score===0}">
             <div class="tweet-head">
                 <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>

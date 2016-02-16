@@ -19,6 +19,29 @@
             <div class="col-sm-2">
                 <ul class="nav navbar-nav">
                     <li><a href="" ng-click="queryFactory.reload()"><i class="fa fa-refresh"></i></a></li>
+                    <li>
+                        <a href="" data-animation="am-flip-x" data-placement="bottom-right" bs-dropdown aria-haspopup="true" aria-expanded="false">
+                            <span ng-switch="sentiment">
+                                <i ng-switch-when="positive" class="fa fa-smile-o"></i>
+                                <i ng-switch-when="negative" class="fa fa-frown-o"></i>
+                                <i ng-switch-default class="fa fa-meh-o"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="" ng-click="queryFactory.param.set('sentiment', 'positive')"><i class="fa fa-smile-o"></i> Positive</a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="queryFactory.param.set('sentiment', 'neutral')"><i class="fa fa-meh-o"></i> Neutral</a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="queryFactory.param.set('sentiment', 'negative')"><i class="fa fa-frown-o"></i> Negative</a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="queryFactory.param.set('sentiment')"><i class="fa fa-meh-o"></i> Any</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

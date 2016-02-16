@@ -19,6 +19,7 @@ angular.module('twitterSearchApp')
         $scope.timeFactory = Time;
         $scope.query = Query.param.get("q");
         $scope.lang = (Query.param.get("lang")) ? Query.param.get("q") : 'en';
+        $scope.sentiment = Query.param.get("sentiment");
 
         $scope.tweetPie = {
             labels: ["Normal", "Retweets", "Replies"],
@@ -74,7 +75,8 @@ angular.module('twitterSearchApp')
             Twitter.search({
                 q: $scope.query,
                 result_type: "recent",
-                lang: $scope.lang
+                lang: $scope.lang,
+                sentiment: $scope.sentiment
             }).then(
                 function success(response) {
                     $scope.summary = response.data.summary;
@@ -88,17 +90,17 @@ angular.module('twitterSearchApp')
                     $scope.tweetPie.data[2] = response.data.summary.tweets.replies;
 
 
-                    if($scope.summary.tweets.total <=50 && $scope.summary.tweets.neutral >= $scope.summary.tweets.total / 2) {
+                    if($scope.tweets.length <=50 && $scope.summary.tweets.neutral >= $scope.tweets.length / 2) {
                         $scope.emoji = "Unknown";
-                    } else if ($scope.summary.sentiment > $scope.summary.tweets.total / 2) {
+                    } else if ($scope.summary.sentiment > $scope.tweets.length / 2) {
                         $scope.emoji = "Very-Positive";
-                    } else if ($scope.summary.sentiment <= $scope.summary.tweets.total / 2 && $scope.summary.sentiment > 0) {
+                    } else if ($scope.summary.sentiment <= $scope.tweets.length / 2 && $scope.summary.sentiment > 0) {
                         $scope.emoji = "Positive";
                     } else if ($scope.summary.sentiment === 0) {
                         $scope.emoji = "Neutral";
-                    } else if ($scope.summary.sentiment < 0 && $scope.summary.sentiment >= $scope.summary.tweets.total / 2 * -1) {
+                    } else if ($scope.summary.sentiment < 0 && $scope.summary.sentiment >= $scope.tweets.length / 2 * -1) {
                         $scope.emoji = "Negative";
-                    } else if ($scope.summary.sentiment < $scope.summary.tweets.total / 2 * -1) {
+                    } else if ($scope.summary.sentiment < $scope.tweets.length/ 2 * -1) {
                         $scope.emoji = "Very-Negative";
                     } else {
                         $scope.emoji = "Unknown";
