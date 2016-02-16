@@ -10,15 +10,20 @@ Twitter Search is a web application that searches for recent tweets based on a p
 * Prerequisite: [GruntJS](http://gruntjs.com/getting-started) 
 * Prerequisite: [Bower](http://bower.io/#install-bower)  
 
+First run the following commands:
+
 ```
 npm install 
 npm run setup
 ```
 
+Then [setup the server](https://github.com/maxcarter/TwitterSearch#server)
+
 ## Server
 
 1. [Configure](https://github.com/maxcarter/TwitterSearch/blob/master/server/config.js) the server with your Twitter consumer_key and consumer_secret. You can obtain these credentials by [creating a Twitter App](https://apps.twitter.com/)
-2. [Build](https://github.com/maxcarter/TwitterSearch#build) the front-end.
+2. Ensure you have a [Mongo DB](https://docs.mongodb.org/manual/installation/) server running. `sudo mongod`
+3. [Build](https://github.com/maxcarter/TwitterSearch#build) the front-end.
 4. Start the Node.js server by running the following command: `npm start`
 5. Wait until you see `The server is now ready to accept requests.`
 6. Open the app in you browser at [http://localhost:3000](http://localhost:3000)
