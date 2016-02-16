@@ -6,6 +6,7 @@ Twitter Search is a web application that searches for recent tweets based on a p
 ## Installation
 
 * Prerequisite: [Node.js](https://nodejs.org/en/) 
+* Prerequisite: [Mongo DB](https://docs.mongodb.org/manual/installation/) 
 * Prerequisite: [GruntJS](http://gruntjs.com/getting-started) 
 * Prerequisite: [Bower](http://bower.io/#install-bower)  
 
