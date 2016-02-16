@@ -41,8 +41,9 @@
   "scripts": {
     "test": "grunt test",
     "postinstall": "",
+    "setup": "bower install && grunt",
     "bower":"bower install",
-    "build": "grunt build",
+    "build": "grunt",
     "start": "node server/server.js"
   },
   "dependencies": {
