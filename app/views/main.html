@@ -128,7 +128,7 @@
                 <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>
             </div>
             <div class="tweet-body">
-                <p ng-bind-html="tweet.text | TweetLinky:'_blank'"></p>
+                <p ng-bind-html="tweet.text | TweetLinky"></p>
             </div>
             <div class="tweet-footer-icons">
                 <a title="Open in Twitter" href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">Open in Twitter <i class="fa fa-twitter"></i></a>
