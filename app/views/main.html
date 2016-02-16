@@ -25,8 +25,6 @@
                 <h2>Instructions</h2>
                 <p>Twitter Search is a web application that searches for recent tweets based on a provided query. The queried tweets are then analyzed using sentiment analysis to determine if they are of positive or negative nature.</p>
                 <p>To search for tweets simply type something in the search bar at the top of the screen and press enter. Your query will be analyzed and the results will be rendered.</p>
-                
-
                 <h2>Search</h2>
                 <p>The search bar query directly corresponds to a twitter search bar. As such you can perform custom searches. Here are some examples:</p>
                 <ul>
@@ -65,6 +63,22 @@
                 </ul>
                 <h2>Sentiment Analysis</h2>
                 <p>This applicaiton uses the Node.js <a href="https://github.com/thisandagain/sentiment" target="_blank">sentiment</a> module to perform sentiment analysis on each tweet queried. The results are stored in a NoSQL database an visualized using a bar graph and emoticon on the search result page.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="tweets.length <= 0">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" align="center">
+                <img-twemoji code="&#x1F61F;" width="50%" height="50%"></img-twemoji>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="row welcome" align="center">
+            <div class="col-sm-12">
+                <h1>Sorry No Tweets Found</h1>
+                <p>{{tweets.length}} tweets were found related to {{query}}</p>
+                <p>Type some text in the search bar above to search again!</p>
             </div>
         </div>
     </div>

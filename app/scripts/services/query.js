@@ -39,6 +39,9 @@ angular.module('twitterSearchApp')
                         value = defaultValue;
                     }
                     return value;
+                },
+                clear: function() {
+                    $location.url($location.path());
                 }
             },
             reload: function() {
