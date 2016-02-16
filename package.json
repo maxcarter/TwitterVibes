@@ -2,6 +2,7 @@
   "name": "twittersearch",
   "private": true,
   "devDependencies": {
+    "bower": "^1.7.7",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",
     "grunt-autoprefixer": "^2.0.0",
@@ -39,12 +40,14 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "bower install && npm run build",
+    "postinstall": "",
+    "bower":"bower install",
     "build": "grunt build",
     "start": "node server/server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cfenv": "^1.0.3",
     "express": "^4.13.4",
     "mongoose": "^4.4.3",
     "morgan": "^1.6.1",

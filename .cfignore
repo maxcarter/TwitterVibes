@@ -1,0 +1,13 @@
+/node_modules
+/app
+/.tmp
+/.sass-cache
+/bower_components
+/app/bower_components
+*.log
+Gruntfile.js
+/test
+.bowerrc
+.jshintrc
+.travis.yml
+.yo-rc.json

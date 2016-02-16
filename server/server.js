@@ -4,11 +4,22 @@ var morgan = require('morgan');
 var qs = require('qs');
 var https = require('https');
 var mongoose = require('mongoose');
+var cfenv = require("cfenv");
 
 var config = require('./config');
 var database = 'mongodb://localhost/twittersearch';
+var cf = cfenv.getAppEnv();
 var app = express();
-var port = 3000;
+var host = (cf.bind) ? cf.bind : 'localhost';
+var port = (cf.port) ? cf.port : 3000;
+
+if (process.env.VCAP_SERVICES) {
+    var env = JSON.parse(process.env.VCAP_SERVICES);
+    if (env['user-provided']) {
+        var mongo = env['user-provided'][0].credentials;
+        database = "mongodb://" + mongo.user + ":" + mongo.password + "@" + mongo.uri + ":" + mongo.port + "/twittersearch"
+    }
+}
 
 mongoose.connect(database);
 
@@ -76,5 +87,5 @@ bearerReq.end();
 
 require('./api')(app, config, https, qs);
 
-app.listen(port);
-console.log("Started Node.js server on port " + port);
+app.listen(port, host);
+console.log("Started Node.js server " + host + ":" + port);

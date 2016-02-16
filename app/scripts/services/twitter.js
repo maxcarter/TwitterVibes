@@ -8,13 +8,13 @@
  * Factory in the twitterSearchApp.
  */
 angular.module('twitterSearchApp')
-    .factory('Twitter', function($q, Request) {
+    .factory('Twitter', function($q, $location, Request) {
         // Service logic
         // ...
 
         var api = {
-            domain: "http://localhost",
-            port: 3000,
+            domain: $location.protocol() + '://'+ $location.host(),
+            port:  $location.port(),
             host: "twitter"
         };
 
