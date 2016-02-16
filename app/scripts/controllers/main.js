@@ -18,7 +18,8 @@ angular.module('twitterSearchApp')
         $scope.queryFactory = Query;
         $scope.timeFactory = Time;
         $scope.query = Query.param.get("q");
-        $scope.lang = (Query.param.get("lang")) ? Query.param.get("q") : 'en';
+        $scope.lang = (Query.param.get("lang")) ? Query.param.get("lang") : 'en';
+        $scope.count = (Query.param.get("count")) ? Query.param.get("count") : 50;
         $scope.sentiment = Query.param.get("sentiment");
 
         $scope.tweetPie = {
@@ -76,6 +77,7 @@ angular.module('twitterSearchApp')
                 q: $scope.query,
                 result_type: "recent",
                 lang: $scope.lang,
+                count: $scope.count,
                 sentiment: $scope.sentiment
             }).then(
                 function success(response) {

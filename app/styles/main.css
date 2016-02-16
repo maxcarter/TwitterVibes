@@ -212,12 +212,20 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
 
 /* Main */
 
+.finger{
+    cursor:pointer;
+}
+.readmore{
+    color:#848484;
+}
+
 .wrapper {
     margin-top: 70px;
 }
 
 .welcome {
     color: #919191;
+    font-size:16px;
 }
 
 .loading {

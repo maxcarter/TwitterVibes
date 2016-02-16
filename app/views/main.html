@@ -4,9 +4,69 @@
     <div class="loading" ng-show="loading">
         <i class="fa fa-spin fa-refresh fa-5x"></i>
     </div>
-    <div align="center" class="welcome" ng-show="welcome">
-        <h1>Welcome!</h1>
-        <p>Type in the search bar above to search for Tweets</p>
+    <div class="welcome" ng-show="welcome">
+        <div class="row" align="center">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <img-twemoji code="&#x1F600;" width="50%" height="50%"></img-twemoji>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="row" align="center">
+            <div class="col-sm-12">
+                <h1>Welcome to TwitterSearch!</h1>
+                <p>I will be the emoticon representing the overall feeling of your topic.</p>
+                <p>Type some text in the search bar above to get started!</p>
+                <p><a href="" ng-click="readmore = !readmore">Read More</a></p>
+            </div>
+        </div>
+        <div class="row readmore" ng-show="readmore">
+            <div class="col-sm-12 well well-lg">
+                <h2>Instructions</h2>
+                <p>Twitter Search is a web application that searches for recent tweets based on a provided query. The queried tweets are then analyzed using sentiment analysis to determine if they are of positive or negative nature.</p>
+                <p>To search for tweets simply type something in the search bar at the top of the screen and press enter. Your query will be analyzed and the results will be rendered.</p>
+                
+
+                <h2>Search</h2>
+                <p>The search bar query directly corresponds to a twitter search bar. As such you can perform custom searches. Here are some examples:</p>
+                <ul>
+                    <li>Hello World <small>Searches for tweets containing 'Hello' and/or 'World'</small></li>
+                    <li>"Hello World" <small>Searches for tweets containing 'Hello World'</small></li>
+                    <li>@username <small>Searches for tweets, retweets, replies and mentions of @username</small></li>
+                    <li>#hello <small>Searches for tweets tagged with #hello</small></li>
+                </ul>
+                <h2>Filters</h2>
+                <p>All analyzed tweets searched for using this this application are stored in a NoSQL database with their corresponding sentiment analysis. Thanks to this, you can also filter your search query based on sentiment. Simply click the <i class="fa fa-meh-o"></i> icon beside the search bar to select a sentiment. The default sentiment is 'Any'. </p>
+                <ul>
+                    <li>
+                        <dl>
+                            <dt>Any</dt>
+                            <dd>Search results are directly from the Twitter API</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Positive</dt>
+                            <dd>Searches the Twitter API, analyzes the results, filters out all non-positive results, queries the NoSQL database for additional positive tweets.</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Neutral</dt>
+                            <dd>Searches the Twitter API, analyzes the results, filters out all non-neutral results, queries the NoSQL database for additional neutral tweets.</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Negative</dt>
+                            <dd>Searches the Twitter API, analyzes the results, filters out all non-negative results, queries the NoSQL database for additional negative tweets.</dd>
+                        </dl>
+                    </li>
+                </ul>
+                <h2>Sentiment Analysis</h2>
+                <p>This applicaiton uses the Node.js <a href="https://github.com/thisandagain/sentiment" target="_blank">sentiment</a> module to perform sentiment analysis on each tweet queried. The results are stored in a NoSQL database an visualized using a bar graph and emoticon on the search result page.</p>
+            </div>
+        </div>
     </div>
     <div class="row" ng-show="tweets.length > 0">
         <div class="col-sm-12 welcome" align="center">
