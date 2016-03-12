@@ -1,6 +1,6 @@
-# Twitter Search
+# Twitter Vibes 
 
-Twitter Search is a web application that searches for recent tweets based on a provided query. The queried tweets are then analyzed using sentiment analysis to determine if they are of positive or negative nature.  
+Twitter Vibes is a MEAN web app that searches and analyzes recent tweets based on a provided query. The tweets are classified as either positive, negative, or neutral depending on the results of sentiment analysis.
 
 
 ## Installation
@@ -17,13 +17,13 @@ npm install
 npm run setup
 ```
 
-Then [setup the server](https://github.com/maxcarter/TwitterSearch#server)
+Then [setup the server](https://github.com/maxcarter/TwitterVibes#server)
 
 ## Server
 
-1. [Configure](https://github.com/maxcarter/TwitterSearch/blob/master/server/config.js) the server with your Twitter consumer_key and consumer_secret. You can obtain these credentials by [creating a Twitter App](https://apps.twitter.com/)
+1. [Configure](https://github.com/maxcarter/TwitterVibes/blob/master/server/config.js) the server with your Twitter consumer_key and consumer_secret. You can obtain these credentials by [creating a Twitter App](https://apps.twitter.com/)
 2. Ensure you have a [Mongo DB](https://docs.mongodb.org/manual/installation/) server running. `sudo mongod`
-3. [Build](https://github.com/maxcarter/TwitterSearch#build) the front-end.
+3. [Build](https://github.com/maxcarter/TwitterVibes#build) the front-end.
 4. Start the Node.js server by running the following command: `npm start`
 5. Wait until you see `The server is now ready to accept requests.`
 6. Open the app in you browser at [http://localhost:3000](http://localhost:3000)
@@ -32,7 +32,7 @@ Then [setup the server](https://github.com/maxcarter/TwitterSearch#server)
 
 * Prerequisite: [Cloud Foundry CLI](https://github.com/cloudfoundry/cli)
 
-This application has been configured to work on a [Cloud Foundry](https://www.cloudfoundry.org/) PaaS that supports Mongo DB. Before pushing to the cloud ensure that you have logged in using `cf login
+This application has been configured to work on a [Cloud Foundry](https://www.cloudfoundry.org/) PaaS that supports Mongo DB. Before pushing to the cloud ensure that you have logged in using `cf login`
 
 ```
 grunt
@@ -126,7 +126,7 @@ Prod-Mode is mapped to the `dist` directory. This mode is the compiled, compress
 
 **Switching from Dev to Prod**
 
-As a standard, all new features should be made in Dev-Mode then compiled into Prod-Mode once completed. To switch from Dev-Mode to Prod-Mode simply [Build the project](https://github.com/maxcarter/TwitterSearch#build).
+As a standard, all new features should be made in Dev-Mode then compiled into Prod-Mode once completed. To switch from Dev-Mode to Prod-Mode simply [Build the project](https://github.com/maxcarter/TwitterVibes#build).
 
 
 
