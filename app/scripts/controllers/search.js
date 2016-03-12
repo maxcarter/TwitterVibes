@@ -24,7 +24,6 @@ angular.module('twitterSearchApp')
 
         if ($scope.query !== null && $scope.query !== undefined && $scope.query !== '') {
             $scope.loading = true;
-            $scope.welcome = false;
 
             Twitter.search({
                 q: $scope.query,
@@ -36,6 +35,7 @@ angular.module('twitterSearchApp')
                 function success(response) {
                     $scope.summary = response.data.summary;
                     $scope.tweets = response.data.statuses;
+                    $scope.emoji = response.data.summary.sentiment_str;
                     $scope.loading = false;
                     $scope.charts.graph.bar.sentiment.data[0][0] = response.data.summary.tweets.positive;
                     $scope.charts.graph.bar.sentiment.data[1][0] = response.data.summary.tweets.neutral;
@@ -43,24 +43,6 @@ angular.module('twitterSearchApp')
                     $scope.charts.pie.tweetType.data[0] = response.data.summary.tweets.normal;
                     $scope.charts.pie.tweetType.data[1] = response.data.summary.tweets.retweets;
                     $scope.charts.pie.tweetType.data[2] = response.data.summary.tweets.replies;
-
-
-                    if ($scope.tweets.length <= 50 && $scope.summary.tweets.neutral >= $scope.tweets.length / 2) {
-                        $scope.emoji = "Unknown";
-                    } else if ($scope.summary.sentiment > $scope.tweets.length / 2) {
-                        $scope.emoji = "Very-Positive";
-                    } else if ($scope.summary.sentiment <= $scope.tweets.length / 2 && $scope.summary.sentiment > 0) {
-                        $scope.emoji = "Positive";
-                    } else if ($scope.summary.sentiment === 0) {
-                        $scope.emoji = "Neutral";
-                    } else if ($scope.summary.sentiment < 0 && $scope.summary.sentiment >= $scope.tweets.length / 2 * -1) {
-                        $scope.emoji = "Negative";
-                    } else if ($scope.summary.sentiment < $scope.tweets.length / 2 * -1) {
-                        $scope.emoji = "Very-Negative";
-                    } else {
-                        $scope.emoji = "Unknown";
-                    }
-
                 },
                 function error(response) {
                     $scope.loading = false;

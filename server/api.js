@@ -3,6 +3,7 @@ var Tweet = require('./models/tweet');
 var analyze = function(data) {
     var summary = {
         sentiment: 0,
+        sentiment_str: 'Unknown',
         tweets: {
             total: data.search_metadata.count,
             normal: 0,
@@ -12,7 +13,7 @@ var analyze = function(data) {
             negative: 0,
             neutral: 0
         }
-    }
+    };
     for (var i = 0; i < data.statuses.length; i++) {
         var s = (data.statuses[i].sentiment) ? data.statuses[i].sentiment : sentiment(data.statuses[i].text);
 
@@ -37,6 +38,21 @@ var analyze = function(data) {
         data.statuses[i].sentiment = s;
     }
     summary.tweets.normal = data.statuses.length - summary.tweets.retweets - summary.tweets.replies;
+    if (data.statuses.length <= 50 && summary.tweets.neutral >= data.statuses.length / 2) {
+        summary.sentiment_str = "Unknown";
+    } else if (summary.sentiment > data.statuses.length / 2) {
+        summary.sentiment_str = "Very-Positive";
+    } else if (summary.sentiment <= data.statuses.length / 2 && summary.sentiment > 0) {
+        summary.sentiment_str = "Positive";
+    } else if (summary.sentiment === 0) {
+        summary.sentiment_str = "Neutral";
+    } else if (summary.sentiment < 0 && summary.sentiment >= data.statuses.length / 2 * -1) {
+        summary.sentiment_str = "Negative";
+    } else if (summary.sentiment < data.statuses.length / 2 * -1) {
+        summary.sentiment_str = "Very-Negative";
+    } else {
+        summary.sentiment_str = "Unknown";
+    }
     data.summary = summary;
     return data;
 };
