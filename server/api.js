@@ -54,7 +54,9 @@ module.exports = function(app, config, https, qs) {
         };
         var http_success = function(data) {
             var d = analyze(data);
-            saveTweets(d);
+            if (config.database.enabled) {
+                saveTweets(d);
+            }
             var orData = [{
                 'name': {
                     "$regex": req.query.q,
@@ -90,103 +92,133 @@ module.exports = function(app, config, https, qs) {
             }
 
             if (req.query.sentiment === 'positive') {
-                Tweet.find({
-                    $text: {
-                        $search: req.query.q,
-                    },
-                    'sentiment.score': {
-                        '$gt': 0
-                    },
-                    'id': {
-                        '$lt': d.search_metadata.max_id - 1
-                    }
-                }, {
-                    score: {
-                        $meta: "textScore"
-                    }
-                }).sort({
-                    'created_at': -1,
-                    score: {
-                        $meta: 'textScore'
-                    }
-                }).limit(data.summary.tweets.total - tweetsArray.positive.length).exec(function(err, posts) {
-                    if (err) {
-                        console.log(err);
-                    }
+                if (config.database.enabled) {
+                    Tweet.find({
+                        $text: {
+                            $search: req.query.q,
+                        },
+                        'sentiment.score': {
+                            '$gt': 0
+                        },
+                        'id': {
+                            '$lt': d.search_metadata.max_id - 1
+                        }
+                    }, {
+                        score: {
+                            $meta: "textScore"
+                        }
+                    }).sort({
+                        'created_at': -1,
+                        score: {
+                            $meta: 'textScore'
+                        }
+                    }).limit(data.summary.tweets.total - tweetsArray.positive.length).exec(function(err, posts) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        var statuses = {
+                            search_metadata: {
+                                count: tweetsArray.positive.length + posts.length
+                            },
+                            statuses: tweetsArray.positive.concat(posts)
+                        };
+                        returnResponse(analyze(statuses));
+                    });
+                } else {
                     var statuses = {
                         search_metadata: {
-                            count: tweetsArray.positive.length + posts.length
+                            count: tweetsArray.positive.length
                         },
-                        statuses: tweetsArray.positive.concat(posts)
+                        statuses: tweetsArray.positive
                     };
                     returnResponse(analyze(statuses));
-                });
+                }
             } else if (req.query.sentiment === 'negative') {
-                Tweet.find({
-                    $text: {
-                        $search: req.query.q,
-                    },
-                    'sentiment.score': {
-                        '$lt': 0
-                    },
-                    'id': {
-                        '$lt': d.search_metadata.max_id - 1
-                    }
-                }, {
-                    score: {
-                        $meta: "textScore"
-                    }
-                }).sort({
-                    'created_at': -1,
-                    score: {
-                        $meta: 'textScore'
-                    }
-                }).limit(data.summary.tweets.total - tweetsArray.negative.length).exec(function(err, posts) {
-                    if (err) {
-                        console.log(err);
-                    }
+                if (config.database.enabled) {
+                    Tweet.find({
+                        $text: {
+                            $search: req.query.q,
+                        },
+                        'sentiment.score': {
+                            '$lt': 0
+                        },
+                        'id': {
+                            '$lt': d.search_metadata.max_id - 1
+                        }
+                    }, {
+                        score: {
+                            $meta: "textScore"
+                        }
+                    }).sort({
+                        'created_at': -1,
+                        score: {
+                            $meta: 'textScore'
+                        }
+                    }).limit(data.summary.tweets.total - tweetsArray.negative.length).exec(function(err, posts) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        var statuses = {
+                            search_metadata: {
+                                count: tweetsArray.negative.length + posts.length
+                            },
+                            statuses: tweetsArray.negative.concat(posts)
+                        };
+                        returnResponse(analyze(statuses));
+                    });
+                } else {
                     var statuses = {
                         search_metadata: {
-                            count: tweetsArray.negative.length + posts.length
+                            count: tweetsArray.negative.length
                         },
-                        statuses: tweetsArray.negative.concat(posts)
+                        statuses: tweetsArray.negative
                     };
                     returnResponse(analyze(statuses));
-                });
+                }
 
             } else if (req.query.sentiment === 'neutral') {
-                Tweet.find({
-                    $text: {
-                        $search: req.query.q,
-                    },
-                    'sentiment.score': 0,
-                    'id': {
-                        '$lt': d.search_metadata.max_id - 1
-                    }
-                }, {
-                    score: {
-                        $meta: "textScore"
-                    }
-                }).sort({
-                    'created_at': -1,
-                    score: {
-                        $meta: 'textScore'
-                    }
-                }).limit(data.summary.tweets.total - tweetsArray.neutral.length).exec(function(err, posts) {
-                    if (err) {
-                        console.log(err);
-                    }
+                if (config.database.enabled) {
+                    Tweet.find({
+                        $text: {
+                            $search: req.query.q,
+                        },
+                        'sentiment.score': 0,
+                        'id': {
+                            '$lt': d.search_metadata.max_id - 1
+                        }
+                    }, {
+                        score: {
+                            $meta: "textScore"
+                        }
+                    }).sort({
+                        'created_at': -1,
+                        score: {
+                            $meta: 'textScore'
+                        }
+                    }).limit(data.summary.tweets.total - tweetsArray.neutral.length).exec(function(err, posts) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        var statuses = {
+                            search_metadata: {
+                                count: tweetsArray.neutral.length + posts.length
+                            },
+                            statuses: tweetsArray.neutral.concat(posts)
+                        };
+                        returnResponse(analyze(statuses));
+                    });
+                } else {
                     var statuses = {
                         search_metadata: {
-                            count: tweetsArray.neutral.length + posts.length
+                            count: tweetsArray.neutral.length
                         },
-                        statuses: tweetsArray.neutral.concat(posts)
+                        statuses: tweetsArray.neutral
                     };
                     returnResponse(analyze(statuses));
-                });
+                }
 
             } else {
-                res.json(d);
+                returnResponse(analyze(d));
             }
 
         };

@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var cfenv = require("cfenv");
 
 var config = require('./config');
-var database = config.mongodb;
+var database = config.database.mongodb;
 var cf = cfenv.getAppEnv();
 var app = express();
 var host = (cf.bind) ? cf.bind : 'localhost';
@@ -21,13 +21,16 @@ if (process.env.VCAP_SERVICES) {
     }
 }
 
-mongoose.connect(database);
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log("Connected to Mongo DB");
-});
+if (config.database.enabled) {
+    mongoose.connect(database);
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+        console.log("Connected to Mongo DB");
+    });
+} else {
+    console.log("Databse disabled");
+}
 
 app.use(bodyParser.urlencoded({
     extended: true

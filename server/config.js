@@ -1,5 +1,8 @@
 module.exports = {
-    'mongodb': 'mongodb://localhost/twittersearch',
     'consumer_key': '',
     'consumer_secret': '',
+    'database': {
+    	'mongodb': 'mongodb://localhost/twittersearch',
+    	'enabled': true
+    }
 };
