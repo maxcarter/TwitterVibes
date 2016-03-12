@@ -1,5 +1,5 @@
 applications:
-- name:    twitter-search
-  host:    twitter-search-mcarter
-  memory:  512M
+- name:    twitter-vibes
+  host:    twittervibes-mcarter
+  memory:  256M
   command: npm start
