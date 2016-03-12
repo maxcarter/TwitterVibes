@@ -2,6 +2,10 @@
 
 Twitter Vibes is a MEAN web app that searches and analyzes recent tweets based on a provided query. The tweets are classified as either positive, negative, or neutral depending on the results of sentiment analysis.
 
+[Demo](http://twittervibes-mcarter.mybluemix.net/)
+
+![Twitter Vibes](https://raw.githubusercontent.com/maxcarter/TwitterVibes/master/app/images/TwitterVibes.jpg)
+
 
 ## Installation
 
