@@ -1,10 +1,6 @@
 <div ng-include="'views/navbar.html'"></div>
 <div class="wrapper">
-    <div id="alert-container"></div>
-    <div class="loading" ng-show="loading">
-        <i class="fa fa-spin fa-refresh fa-5x"></i>
-    </div>
-    <div class="welcome" ng-show="welcome">
+    <div class="welcome">
         <div class="row" align="center">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
@@ -17,7 +13,8 @@
                 <h1>Welcome to Twitter Vibes!</h1>
                 <p>I will be the emoticon representing the overall feeling of your topic.</p>
                 <p>Type some text in the search bar above to get started!</p>
-                <p><a href="" ng-click="readmore = !readmore">Read More</a></p>
+                <p ng-show="!readmore"><a href="" ng-click="readmore = !readmore">Read More</a></p>
+                <p ng-show="readmore"><a href="" ng-click="readmore = !readmore">Read Less</a></p>
             </div>
         </div>
         <div class="row readmore" ng-show="readmore">
@@ -63,78 +60,6 @@
                 </ul>
                 <h2>Sentiment Analysis</h2>
                 <p>This applicaiton uses the Node.js <a href="https://github.com/thisandagain/sentiment" target="_blank">sentiment</a> module to perform sentiment analysis on each tweet queried. The results are stored in a NoSQL database an visualized using a bar graph and emoticon on the search result page.</p>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-show="tweets.length <= 0">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4" align="center">
-                <img-twemoji code="&#x1F61F;" width="50%" height="50%"></img-twemoji>
-            </div>
-            <div class="col-sm-4"></div>
-        </div>
-        <div class="row welcome" align="center">
-            <div class="col-sm-12">
-                <h1>Sorry No Tweets Found</h1>
-                <p>{{tweets.length}} tweets were found related to {{query}}</p>
-                <p>Type some text in the search bar above to search again!</p>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-show="tweets.length > 0">
-        <div class="col-sm-12 welcome" align="center">
-            <div style="padding-bottom:50px">
-                <h1 align="center">Analyzed {{tweets.length}} Tweets!</h1>
-                <small>{{tweets.length}} recent tweets were analyzed related to your query: {{query}}</small>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-show="tweets.length > 0">
-        <div class="col-sm-4" align="center">
-            <div ng-switch="emoji">
-                <div ng-switch-when="Very-Positive">
-                    <img-twemoji code="&#x1F60E;" width="50%" height="50%"></img-twemoji>
-                </div>
-                <div ng-switch-when="Positive">
-                    <img-twemoji code="&#x1F600;" width="50%" height="50%"></img-twemoji>
-                </div>
-                <div ng-switch-when="Neutral">
-                    <img-twemoji code="&#x1F610;" width="50%" height="50%"></img-twemoji>
-                </div>
-                <div ng-switch-when="Negative">
-                    <img-twemoji code="&#x1F620;" width="50%" height="50%"></img-twemoji>
-                </div>
-                <div ng-switch-when="Very-Negative">
-                    <img-twemoji code="&#x1F621;" width="50%" height="50%"></img-twemoji>
-                </div>
-                <div ng-switch-default>
-                    <img-twemoji code="&#x1F615;" width="50%" height="50%"></img-twemoji>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <canvas id="pie" class="chart chart-pie" chart-data="tweetPie.data" chart-labels="tweetPie.labels" chart-legend="true" chart-colours="tweetPie.colors">
-            </canvas>
-        </div>
-        <div class="col-sm-4">
-            <canvas id="bar" class="chart chart-bar" chart-data="sentimentGraph.data" chart-labels="sentimentGraph.labels" chart-colours="sentimentGraph.colors" chart-series="sentimentGraph.series" chart-legend="true">
-            </canvas>
-        </div>
-    </div>
-    <div class="col-md-4" ng-repeat="tweet in tweets | orderBy: '-created_at'">
-        <div class="tweet-card" ng-class="{'tweet-positive': tweet.sentiment.score>0, 'tweet-negative': tweet.sentiment.score<0,'tweet-neutral': tweet.sentiment.score===0}">
-            <div class="tweet-head">
-                <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><strong>{{tweet.user.name}}</strong></a> <a href="https://twitter.com/{{tweet.user.screen_name}}" target="_blank"><small>@{{tweet.user.screen_name}}</small></a>
-            </div>
-            <div class="tweet-body">
-                <p ng-bind-html="tweet.text | TweetLinky"></p>
-            </div>
-            <div class="tweet-footer-icons">
-                <a title="Open in Twitter" href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">Open in Twitter <i class="fa fa-twitter"></i></a>
-            </div>
-            <div class="tweet-time">
-                <small>{{timeFactory.fromNow(tweet.created_at)}}</small>
             </div>
         </div>
     </div>

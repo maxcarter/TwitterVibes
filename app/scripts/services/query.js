@@ -16,9 +16,9 @@ angular.module('twitterSearchApp')
             param: {
                 set: function(key, value) {
                     if (value !== "") {
-                        $location.search(key, value);
+                        $location.path('/search').search(key, value);
                     } else {
-                        $location.search(key, null);
+                        $location.path('/search').search(key, null);
                     }
                 },
                 get: function(key, type, defaultValue) {
@@ -46,6 +46,9 @@ angular.module('twitterSearchApp')
             },
             reload: function() {
                 $route.reload();
+            },
+            path: function(path) {
+                $location.path(path);
             }
         };
     });
