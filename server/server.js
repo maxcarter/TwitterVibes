@@ -29,7 +29,7 @@ if (config.database.enabled) {
         console.log("Connected to Mongo DB");
     });
 } else {
-    console.log("Databse disabled");
+    console.log("Database disabled");
 }
 
 app.use(bodyParser.urlencoded({
