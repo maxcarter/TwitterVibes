@@ -3,34 +3,15 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var qs = require('qs');
 var https = require('https');
-var mongoose = require('mongoose');
 var cfenv = require("cfenv");
 
 var config = require('./config');
-var database = config.database.mongodb;
 var cf = cfenv.getAppEnv();
 var app = express();
 var host = (cf.bind) ? cf.bind : 'localhost';
 var port = (cf.port) ? cf.port : 3000;
 
-if (process.env.VCAP_SERVICES) {
-    var env = JSON.parse(process.env.VCAP_SERVICES);
-    if (env['user-provided']) {
-        var mongo = env['user-provided'][0].credentials;
-        database = "mongodb://" + mongo.user + ":" + mongo.password + "@" + mongo.uri + ":" + mongo.port + "/twittersearch"
-    }
-}
-
-if (config.database.enabled) {
-    mongoose.connect(database);
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function() {
-        console.log("Connected to Mongo DB");
-    });
-} else {
-    console.log("Database disabled");
-}
+require('./database')(config);
 
 app.use(bodyParser.urlencoded({
     extended: true
