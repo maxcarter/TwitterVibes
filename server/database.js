@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-module.exports = function(config) {
+var config = require('./config');
+module.exports = function() {
     var database = config.database.mongodb;
     if (process.env.VCAP_SERVICES) {
         var env = JSON.parse(process.env.VCAP_SERVICES);
