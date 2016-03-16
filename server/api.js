@@ -243,52 +243,13 @@ module.exports = function(app) {
             } else {
                 returnResponse(analyze(d));
             }
-
         };
 
         var http_error = function(data, status) {
             res.status((status) ? status : 500).json(data);
         };
 
-        if (config.bearer) {
-            var options = {
-                host: 'api.twitter.com',
-                path: '/1.1/search/tweets.json?' + qs.stringify(req.query),
-                method: 'GET',
-                headers: {
-                    'accept': '*/*',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + config.bearer
-                }
-            };
-            var request = https.request(options).on('response', function(response) {
-                var data = '';
-                var error = '';
-                response.on("data", function(d) {
-                    data += d;
-                });
-                response.on("error", function(e) {
-                    error = e;
-                });
-                response.on('end', function() {
-                    if (error) {
-                        http_error(JSON.parse(JSON.stringify(e)));
-                    } else {
-                        http_success(JSON.parse(data));
-                    }
-
-                });
-            });
-            request.on("error", function(e) {
-                var error = JSON.parse(JSON.stringify(e));
-                error.text = "HTTPS request error for api.twitter.com/1.1/search/tweets.json, see console for details!";
-                http_error(error);
-            });
-            request.end();
-        } else {
-            http_error({
-                text: "No Twitter API Bearer token!"
-            });
-        }
+        twitter.search(req.query, http_success, http_error);
+        
     });
 }
