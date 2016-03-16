@@ -4,6 +4,7 @@ var https = require('https');
 var Tweet = require('./models/tweet');
 var config = require('./config');
 var twitter = require('./controllers/twitter');
+var mongo = require('./controllers/mongodb');
 
 twitter.get.bearer();
 
@@ -63,13 +64,6 @@ var analyze = function(data) {
     data.summary = summary;
     return data;
 };
-var saveTweets = function(data) {
-    for (var i = 0; i < data.statuses.length; i++) {
-        data.statuses[i].created_at = new Date(data.statuses[i].created_at);
-        var tweet = new Tweet(data.statuses[i]);
-        tweet.save();
-    }
-}
 module.exports = function(app) {
     app.get('/twitter/search/tweets', function(req, res) {
         var returnResponse = function(data) {
@@ -78,25 +72,15 @@ module.exports = function(app) {
         var http_success = function(data) {
             var d = analyze(data);
             if (config.database.enabled) {
-                saveTweets(d);
+                mongo.tweets.save(d.statuses);
             }
-            var orData = [{
-                'name': {
-                    "$regex": req.query.q,
-                    "$options": 'i'
-                }
-            }, {
-                'screen_name': {
-                    "$regex": req.query.q,
-                    "$options": 'i'
-                }
-            }];
 
             var tweetsArray = {
                 positive: [],
                 negative: [],
                 neutral: []
             };
+            var oldest = new Date(); 
 
             if (req.query.sentiment === 'positive' || req.query.sentiment === 'negative' || req.query.sentiment === 'neutral') {
                 // Hacky way of kind of avoiding event inconsistency
@@ -111,34 +95,37 @@ module.exports = function(app) {
                     if (d.statuses[i].sentiment.score === 0) {
                         tweetsArray.neutral.push(d.statuses[i]);
                     }
+
+                    if(new Date(d.statuses[i].created_at) < oldest){
+                        oldest = new Date(d.statuses[i].created_at);
+                    }
                 }
             }
 
+            var criteria = {
+                $text: {
+                    $search: req.query.q,
+                },
+                'created_at': {
+                    '$lt': oldest
+                }
+
+            };
+
+            var sortData = {
+                'created_at': -1,
+                score: {
+                    $meta: 'textScore'
+                }
+            };
+
             if (req.query.sentiment === 'positive') {
                 if (config.database.enabled) {
-                    Tweet.find({
-                        $text: {
-                            $search: req.query.q,
-                        },
-                        'sentiment.score': {
-                            '$gt': 0
-                        },
-                        'id': {
-                            '$lt': d.search_metadata.max_id - 1
-                        }
-                    }, {
-                        score: {
-                            $meta: "textScore"
-                        }
-                    }).sort({
-                        'created_at': -1,
-                        score: {
-                            $meta: 'textScore'
-                        }
-                    }).limit(data.summary.tweets.total - tweetsArray.positive.length).exec(function(err, posts) {
-                        if (err) {
-                            console.log(err);
-                        }
+                    criteria['sentiment.score'] = {
+                        '$gt': 0
+                    };
+                    var limit = data.summary.tweets.total - tweetsArray.positive.length;
+                    var calculate = function(posts) {
                         var statuses = {
                             search_metadata: {
                                 count: tweetsArray.positive.length + posts.length
@@ -146,7 +133,8 @@ module.exports = function(app) {
                             statuses: tweetsArray.positive.concat(posts)
                         };
                         returnResponse(analyze(statuses));
-                    });
+                    };
+                    mongo.tweets.find(criteria, sortData, limit, calculate);
                 } else {
                     var statuses = {
                         search_metadata: {
@@ -158,29 +146,11 @@ module.exports = function(app) {
                 }
             } else if (req.query.sentiment === 'negative') {
                 if (config.database.enabled) {
-                    Tweet.find({
-                        $text: {
-                            $search: req.query.q,
-                        },
-                        'sentiment.score': {
-                            '$lt': 0
-                        },
-                        'id': {
-                            '$lt': d.search_metadata.max_id - 1
-                        }
-                    }, {
-                        score: {
-                            $meta: "textScore"
-                        }
-                    }).sort({
-                        'created_at': -1,
-                        score: {
-                            $meta: 'textScore'
-                        }
-                    }).limit(data.summary.tweets.total - tweetsArray.negative.length).exec(function(err, posts) {
-                        if (err) {
-                            console.log(err);
-                        }
+                    criteria['sentiment.score'] = {
+                        '$lt': 0
+                    };
+                    var limit = data.summary.tweets.total - tweetsArray.negative.length;
+                    var calculate = function(posts) {
                         var statuses = {
                             search_metadata: {
                                 count: tweetsArray.negative.length + posts.length
@@ -188,7 +158,8 @@ module.exports = function(app) {
                             statuses: tweetsArray.negative.concat(posts)
                         };
                         returnResponse(analyze(statuses));
-                    });
+                    };
+                    mongo.tweets.find(criteria, sortData, limit, calculate);
                 } else {
                     var statuses = {
                         search_metadata: {
@@ -201,27 +172,9 @@ module.exports = function(app) {
 
             } else if (req.query.sentiment === 'neutral') {
                 if (config.database.enabled) {
-                    Tweet.find({
-                        $text: {
-                            $search: req.query.q,
-                        },
-                        'sentiment.score': 0,
-                        'id': {
-                            '$lt': d.search_metadata.max_id - 1
-                        }
-                    }, {
-                        score: {
-                            $meta: "textScore"
-                        }
-                    }).sort({
-                        'created_at': -1,
-                        score: {
-                            $meta: 'textScore'
-                        }
-                    }).limit(data.summary.tweets.total - tweetsArray.neutral.length).exec(function(err, posts) {
-                        if (err) {
-                            console.log(err);
-                        }
+                    criteria['sentiment.score'] = 0;
+                    var limit = data.summary.tweets.total - tweetsArray.neutral.length;
+                    var calculate = function(posts) {
                         var statuses = {
                             search_metadata: {
                                 count: tweetsArray.neutral.length + posts.length
@@ -229,7 +182,8 @@ module.exports = function(app) {
                             statuses: tweetsArray.neutral.concat(posts)
                         };
                         returnResponse(analyze(statuses));
-                    });
+                    };
+                    mongo.tweets.find(criteria, sortData, limit, calculate);
                 } else {
                     var statuses = {
                         search_metadata: {
@@ -246,10 +200,11 @@ module.exports = function(app) {
         };
 
         var http_error = function(data, status) {
+            console.log('In http_error');
             res.status((status) ? status : 500).json(data);
         };
 
         twitter.search(req.query, http_success, http_error);
-        
+
     });
 }

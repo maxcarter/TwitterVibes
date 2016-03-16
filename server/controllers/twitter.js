@@ -53,7 +53,7 @@ module.exports = {
             request.end();
         }
     },
-    search: function(query, success, error) {
+    search: function(query, successCallback, errorCallback) {
         if (config.bearer) {
             var request = https.request({
                 host: 'api.twitter.com',
@@ -75,20 +75,20 @@ module.exports = {
                 });
                 response.on('end', function() {
                     if (error) {
-                        error(JSON.parse(JSON.stringify(e)));
+                        errorCallback(JSON.parse(JSON.stringify(e)));
                     } else {
-                        success(JSON.parse(data));
+                        successCallback(JSON.parse(data));
                     }
                 });
             });
             request.on("error", function(e) {
                 var er = JSON.parse(JSON.stringify(e));
                 er.text = "HTTPS request error for api.twitter.com/1.1/search/tweets.json, see console for details!";
-                error(er);
+                errorCallback(er);
             });
             request.end();
         } else {
-            error({
+            errorCallback({
                 text: "No Twitter API Bearer token!"
             });
         }
